@@ -1,10 +1,17 @@
-# Ignore sensitive files
-key.txt
-*.age
-*.dec
+# Private keys (CRITICAL)
+*.pem
+*.key
+*.pub
 
-# Ignore logs if needed
-# transfer.log
+# Encrypted/test outputs
+*.enc
+*.out
 
-# macOS junk
+# Logs (optional — depends on your requirement)
+transfer.log
+
+# System files
 .DS_Store
+
+# Temporary files
+*.tmp
