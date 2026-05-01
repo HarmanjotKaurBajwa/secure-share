@@ -1,31 +1,28 @@
-# Secure File Sharing Tool (CLI)
+Secure File Sharing Tool (CLI)
 
-##  Project Overview
+Project Overview
 
 This project implements a **secure file sharing system** using command-line tools for encrypting, transferring, and verifying files.
 
-### Testing Environment
+Testing Environment
 
-This system was **tested locally on a single machine (`localhost`)**, simulating both:
+This system was tested locally on a single machine (`localhost`), simulating both:
 
-* **Sender**
-* **Receiver**
+* Sender
+* Receiver
 
 No external server was used. SSH and file transfer were performed using the local system to demonstrate the complete workflow safely.
 
-
-## ️ Prerequisites
+Prerequisites
 
 Before Starting check inside Terminal whether the following Prerequistis are present: 
 
-### 1. Bash
+1. Bash
 
 * Used to write and execute scripts
 * Pre-installed on macOS
 
-
-
-### 2. OpenSSH (Provided)
+2. OpenSSH (Provided)
 
 * Provided by instructor
 * Used for:
@@ -40,10 +37,9 @@ Check command:
 ssh -V
 ```
 
+3. Installed `age` ~ I already had Homebrew
 
-### 3. Installed `age` ~ I already had Homebrew
-
-#### macOS:
+macOS:
 
 ```bash
 brew install age
@@ -54,20 +50,16 @@ Verify:
 ```bash
 age --version
 ```
-
-
-### 4. Checksum Tool
+4. Checksum Tool
 
 macOS:
 
 ```bash
 shasum -a 256
 ```
+Command line and Work Flow for  Project Setup (Folder Creation)
 
-
-## Command line and Work Flow for  Project Setup (Folder Creation)
-
-### 1. Creating a Project Folder
+1. Creating a Project Folder
 
 ```bash
 Go inside Desktop ~ cd ~/Desktop
@@ -75,25 +67,19 @@ Create a folder ~ mkdir secure-share
 Go inside this folder ~ cd secure-share
 ```
 
-
-
-### 2. Creating the Required Files inside secure-share
+2. Creating the Required Files inside secure-share
 
 ```bash
 touch send.sh receive.sh setup_keys.sh transfer.log README.md
 ```
 
----
-
-### 3. Making the Scripts Executable
+3. Making the Scripts Executable
 
 ```bash
 chmod +x send.sh receive.sh setup_keys.sh
 ```
 
----
-
-### 4. Verify Files
+4. Verify Files
 
 ```bash
 ls
@@ -105,9 +91,7 @@ Output:
 README.md    receive.sh    send.sh    setup_keys.sh    transfer.log
 ```
 
----
-
-##  Key Setup
+2. Key Setup
 
 Run:
 
@@ -116,24 +100,32 @@ Run:
 nano ./setup_keys.sh ~ write the command line control+O >  return > control+X
 ```
 
-### What it does:
+What it does:
 
 * Sets up SSH keys > for secure authentication during file transfer
 * Generates AGE key pair > for file encryption and decryption
 
 Command used: 
 
->SSH Key Generation (Authentication) > ssh-keygen -t ed25519 >
+>SSH Key Generation (Authentication) >
+
+```bash
+ssh-keygen -t ed25519
+```
 
 Generates a public-private key pair
 Stored in:
 Private key → ~/.ssh/id_ed25519
 Public key → ~/.ssh/id_ed25519pub > Added to ~/.ssh/authorized_keys > Shared with the receiver
 
->AGE Key Generation (Encryption) > age-keygen -o key.txt > 
+>AGE Key Generation (Encryption) >
+
+```bash
+age-keygen -o key.txt
+```
 
 Output:
-# public key: age1d8gallccz830dcprarvvkle87qh0salqg90qyyq70scjllfrgvmqd56spn
+public key: age1d8gallccz830dcprarvvkle87qh0salqg90qyyq70scjllfrgvmqd56spn
 
  
 Example output:
@@ -151,10 +143,9 @@ Setup complete.
 * Public key → shared with sender
 * `key.txt` → private key (keep secret)
 
+3. System Workflow
 
-##  System Workflow
-
-###  Sender Side
+Sender Side
 
 1. Select file
 2. Generate checksum
@@ -162,23 +153,27 @@ Setup complete.
 4. Transfer file
 5. Log operation
 
-### Receiver Side
+Receiver Side
 
 1. Receive `.age` file
 2. Decrypt file
 3. Generate checksum
 4. Verify integrity
 
-Prceducer Used: 
+4. Prceducer Used: 
 
-### Sending a File
+A. Sending a File
 
 
 Step 1: Create a File to Send (Test Data)
 
 Command: 
 
-echo "hello world" > test.txt"> Creates a sample file test.txt
+```bash
+echo "hello world" > test.txt
+```
+
+> Creates a sample file test.txt
 
 Used to simulate real data (e.g., reports, notes)
 
@@ -186,7 +181,9 @@ Step 2: Generate Checksum (Integrity Preparation)
 
 Command:
 
+```bash
 shasum -a 256 test.txt
+```
 
 Example output:
 a948904f2f0f479b8f8197694b30184b0d2ed1c1cd2a1ec0fb85d299a192a447  test.txt
@@ -204,7 +201,9 @@ Step 3: Encrypting the file:
 
 Command: 
 
+```bash
 age -r age1d8gallccz830dcprarvvkle87qh0salqg90qyyq70scjllfrgvmqd56spn -o test.txt.age test.txt 
+```
 
 Output> test.txt.age (encrypted file) 
 
@@ -214,8 +213,9 @@ Step 4: Transferring the file securely (SSH)
 
 Command: 
 
+```bash
 scp test.txt.age localhost:~
-
+```
 Example Output: 
 
 test.txt.age 100% 212 627.4KB/s 00:00
@@ -234,7 +234,9 @@ At the end of the send.sh script, a log entry is appended using a command simila
 
 Command:
 
+```bash
 echo "$(date) | $USER | $recipient | $filename | sha256:$checksum | SUCCESS" >> transfer.log"
+```
 
 Example Log Entry
 
@@ -246,8 +248,9 @@ Each new transfer is appended to the log:
 
 Command
 
+```bash
 cat transfer.log
-
+```
 Example:
 Fri May  1 06:13:51 IST 2026 | harmanjot | localhost | test.txt | sha256:... | SUCCESS
 Fri May  1 06:18:06 IST 2026 | harmanjot | localhost | log_test.txt | sha256:... | SUCCESS
