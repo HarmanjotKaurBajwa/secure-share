@@ -2,7 +2,7 @@ Secure File Sharing Tool (CLI)
 
 Project Overview
 
-This project implements a **secure file sharing system** using command-line tools for encrypting, transferring, and verifying files.
+This project implements a secure file sharing system using command-line tools for encrypting, transferring, and verifying files.
 
 Testing Environment
 
@@ -266,13 +266,15 @@ Example:
 
 Fri May  1 07:00:00 IST 2026 | harmanjot | invalidhost | test.txt | sha256:... | FAILED
 
-## Combined Script Execution
+Combined Script Execution
 
 All the above steps are automated using:
 
 Command:
 
+```bash
 ./send.sh test.txt localhost age1d8gallccz830dcprarvvkle87qh0salqg90qyyq70scjllfrgvmqd56spn
+```
 
 Output:
 Generating checksum...
@@ -297,7 +299,7 @@ After successful execution:
 >Transfer is logged
 >File is ready for secure decryption and verification on receiver side
 
-### Receiving a File
+B. Receiving a File
 
 Step 1: Recieving the Encrypted File
 
@@ -311,7 +313,9 @@ Step 2: Decrypting the File (Confidentiality)
 
 Command:
 
+```bash
 age -d -i key.txt -o test.txt.dec ~/test.txt.age
+```
 
 Output → test.txt.dec
 
@@ -321,7 +325,9 @@ Step 3: Generate Checksum (Post-Transfer Integrity)
 
 Command: 
 
+```bash
 shasum -a 256 test.txt.dec
+```
 
 Example output:
 a948904f2f0f479b8f8197694b30184b0d2ed1c1cd2a1ec0fb85d299a192a447  test.txt.dec
@@ -343,14 +349,15 @@ Result: Integrity check Passed
 Confirms file was not altered during transfer
 If values differ → integrity check fails
 
-## Combined Script Execution
+Combined Script Execution
 
 All steps are automated using:
 
 Command:
 
+```bash
 ./receive.sh ~/test.txt.age key.txt a948904f2f0f479b8f8197694b30184b0d2ed1c1cd2a1ec0fb85d299a192a447
-
+```
 Output:
 
 Decrypting file...
@@ -362,7 +369,9 @@ Step 5: Verify Content
 
 Command:
 
+```bash
 cat test.txt.dec
+```
 
 Output:
 
@@ -379,21 +388,7 @@ File integrity is verified
 Receiver confirms authenticity of data
 System ensures secure and reliable file sharing
 
-
-
-##  Testing Performed (Detailed Explanation)
-
-The system was tested in a **local environment (`localhost`)**, simulating both sender and receiver on the same machine.
-
-The goal was to verify:
-
-* Correct encryption and decryption
-* Integrity verification using checksums
-* Logging functionality
-* Handling of multiple transfers
-
-
-### Testings that were performed: 
+5. Testings that were performed: 
 
 The system was tested in a local environment (localhost), stimulating both sender and reciever on the same machine.
 
@@ -422,7 +417,7 @@ Transferring file...
 Done.
 
 
-### Step 3: Verify Original Checksum
+Step 3: Verify Original Checksum
 
 ```bash 
 shasum -a 256 test.txt
@@ -433,8 +428,6 @@ Output:
 
 a948904f2f0f479b8f8197694b30184b0d2ed1c1cd2a1ec0fb85d299a192a447  test.txt
 
-
----
 
 Step 4: Receive and Decrypt File
 
@@ -580,7 +573,7 @@ Result
 * System works consistently across multiple tests
 -
 
-##  Summary of Testing
+Summary of Testing
 
 The following aspects were successfully verified:
 
@@ -590,14 +583,13 @@ The following aspects were successfully verified:
 *  Logging of all transfers
 *  Handling of repeated operations
 
-
-##  Testing Limitations
+Testing Limitations
 
 * All tests were performed on `localhost`
 * No real remote server or network conditions were tested
 
 
-##  Security Features
+6. Security Features
 
 * Encryption using `age` public key
 * Secure transfer using SSH (`scp`)
@@ -606,20 +598,20 @@ The following aspects were successfully verified:
 * Transfer logging
 
 
-##  Error Handling
+7. Error Handling
 
 Handles:
 
-* Missing files
 * Incorrect keys
 * Transfer failures
 * Checksum mismatch
 
+  I forgot to add missing files to the log so that is not shown in the transfer.log file
+
 Scripts print clear messages and exit safely.
 
-https://github.com/HarmanjotKaurBajwa/secure-share
 
-##  Git Repository Setup
+8. Git Repository Setup
 
 Step  1. Initialize Repository
 
@@ -632,22 +624,22 @@ Step 2. Create `.gitignore`
 
 Ignored:
 
-# Private keys (CRITICAL)
+a. Private keys (CRITICAL)
 *.pem
 *.key
 *.pub
 
-# Encrypted/test outputs
+b. Encrypted/test outputs
 *.enc
 *.out
 
-# Logs (optional — depends on your requirement)
+c. Logs (optional — depends on your requirement)
 transfer.log
 
-# System files
+d. System files
 .DS_Store
 
-# Temporary files
+e. Temporary files
 *.tmp
 
 Step 3. Add and Commit
@@ -670,9 +662,7 @@ git rm --cached transfer.log
 git commit -m "Remove transfer.log from version control"
 ```
 
----
-
-### 6. Connect to GitHub
+ Step 6 Connect to GitHub
 
 ```bash
 git remote add origin https://github.com/HarmanjotKaurBajwa/secure-share.git
@@ -681,6 +671,6 @@ git push -u origin main
 ```
 
 
-Link to my Git repository for secure-share: https://github.com/HarmanjotKaurBajwa/secure-share 
+## Link to my Git repository for secure-share: https://github.com/HarmanjotKaurBajwa/secure-share 
 
 
