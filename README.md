@@ -13,7 +13,7 @@ This system was tested locally on a single machine (`localhost`), simulating bot
 
 No external server was used. SSH and file transfer were performed using the local system to demonstrate the complete workflow safely.
 
-Prerequisites
+0. Prerequisites:
 
 Before Starting check inside Terminal whether the following Prerequistis are present: 
 
@@ -513,6 +513,7 @@ Fri May  1 06:18:06 IST 2026 | harmanjot | localhost | log_test.txt | sha256:...
 Fri May  1 06:18:52 IST 2026 | harmanjot | localhost | log_test.txt | sha256:... | SUCCESS
 
 
+
  Result
 
 * Multiple entries appended correctly
@@ -570,7 +571,17 @@ Result
 * End-to-end workflow successful
 * Integrity verified
 * System works consistently across multiple tests
--
+
+Test 5: Transfer Failure
+
+```bash
+./send.sh test.txt invalidhost fakekey
+```
+
+Expected Output: Transfer failed!
+
+Log entry: ... | invalidhost | test.txt | sha256:... | FAILED (transfer error) 
+
 
 Summary of Testing
 
