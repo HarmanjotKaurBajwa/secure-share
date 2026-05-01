@@ -1,0 +1,10 @@
+# Ignore sensitive files
+key.txt
+*.age
+*.dec
+
+# Ignore logs if needed
+# transfer.log
+
+# macOS junk
+.DS_Store
