@@ -97,7 +97,6 @@ Run:
 
 ```bash
 ./setup_keys.sh
-nano ./setup_keys.sh ~ write the command line control+O >  return > control+X
 ```
 
 What it does:
@@ -160,7 +159,7 @@ Receiver Side
 3. Generate checksum
 4. Verify integrity
 
-4. Prceducer Used: 
+4. Procedure Used: 
 
 A. Sending a File
 
@@ -235,7 +234,7 @@ At the end of the send.sh script, a log entry is appended using a command simila
 Command:
 
 ```bash
-echo "$(date) | $USER | $recipient | $filename | sha256:$checksum | SUCCESS" >> transfer.log"
+echo "$(date) | $USER | $recipient | $filename | sha256:$checksum | SUCCESS" >> transfer.log
 ```
 
 Example Log Entry
@@ -301,7 +300,7 @@ After successful execution:
 
 B. Receiving a File
 
-Step 1: Recieving the Encrypted File
+Step 1: Receiving the Encrypted File
 
 After the sender runs the transfer, the encrypted file is available on the receiver side (in this case, copied to the home directory using scp).
 
@@ -390,7 +389,7 @@ System ensures secure and reliable file sharing
 
 5. Testings that were performed: 
 
-The system was tested in a local environment (localhost), stimulating both sender and reciever on the same machine.
+The system was tested in a local environment (localhost), simulating both sender and receiver on the same machine.
 
 
 Test 1: Basic File Transfer and Integrity Check
@@ -606,7 +605,7 @@ Handles:
 * Transfer failures
 * Checksum mismatch
 
-  I forgot to add missing files to the log so that is not shown in the transfer.log file
+  Missing file errors are handled by the script, but they are not currently logged in transfer.log.
 
 Scripts print clear messages and exit safely.
 
